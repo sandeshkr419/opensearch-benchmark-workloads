@@ -947,4 +947,198 @@
           }
         ]
       }
+    },
+    {
+  "name": "sum_metric_size",
+  "operation-type": "search",
+  "index": "{{index_name | default('big5')}}",
+  "body": {
+    "size": 0,
+    "aggs": {
+      "total_size": {
+        "sum": {
+          "field": "metrics.size"
+        }
+      }
     }
+  }
+},
+    {
+    "name": "max_metric_size",
+  "operation-type": "search",
+  "index": "{{index_name | default('big5')}}",
+  "body": {
+    "size": 0,
+    "aggs": {
+      "total_size": {
+        "max": {
+          "field": "metrics.size"
+        }
+      }
+    }
+  }
+},
+          {  "name": "min_metric_size",
+  "operation-type": "search",
+  "index": "{{index_name | default('big5')}}",
+  "body": {
+    "size": 0,
+    "aggs": {
+      "total_size": {
+        "min": {
+          "field": "metrics.size"
+        }
+      }
+    }
+  }
+},
+    { "name": "avg_metric_size",
+  "operation-type": "search",
+  "index": "{{index_name | default('big5')}}",
+  "body": {
+    "size": 0,
+    "aggs": {
+      "total_size": {
+        "avg": {
+          "field": "metrics.size"
+        }
+      }
+    }
+  }
+},
+      { "name": "count_metric_size",
+  "operation-type": "search",
+  "index": "{{index_name | default('big5')}}",
+  "body": {
+    "size": 0,
+    "aggs": {
+      "total_size": {
+        "value_count": {
+          "field": "metrics.size"
+        }
+      }
+    }
+  }
+},
+    {
+  "name": "sum_metric_tmin_with_term_query",
+  "operation-type": "search",
+  "index": "{{index_name | default('big5')}}",
+  "body": {
+    "size": 0,
+    "query": {
+      "term": {
+        "metrics.tmin": 20
+      }
+    },
+    "aggs": {
+      "total_tmin": {
+        "sum": {
+          "field": "metrics.tmin"
+        }
+      }
+    }
+  }
+},
+    {
+  "name": "date_histogram_agg_hour",
+  "operation-type": "search",
+  "index": "{{index_name | default('big5')}}",
+  "body": {
+    "size": 0,
+    "aggs": {
+      "by_hour": {
+        "date_histogram": {
+          "field": "@timestamp",
+          "calendar_interval": "hour"
+        },
+        "aggs": {
+          "sum_status": {
+            "sum": {
+              "field": "metrics.tmin"
+            }
+          }
+        }
+      }
+    }
+  }
+}, {
+  "name": "date_histogram_agg_month",
+  "operation-type": "search",
+  "index": "{{index_name | default('big5')}}",
+  "body": {
+    "size": 0,
+    "aggs": {
+      "by_month": {
+        "date_histogram": {
+          "field": "@timestamp",
+          "calendar_interval": "month"
+        },
+        "aggs": {
+          "sum_status": {
+            "sum": {
+              "field": "metrics.tmin"
+            }
+          }
+        }
+      }
+    }
+  }
+},
+     {
+  "name": "date_histogram_agg_hour_with_term_query",
+  "operation-type": "search",
+  "index": "{{index_name | default('big5')}}",
+  "body": {
+    "size": 0,
+    "query": {
+      "term": {
+        "metrics.tmin": 20
+      }
+    },
+    "aggs": {
+      "by_hour": {
+        "date_histogram": {
+          "field": "@timestamp",
+          "calendar_interval": "hour"
+        },
+        "aggs": {
+          "sum_status": {
+            "sum": {
+              "field": "metrics.size"
+            }
+          }
+        }
+      }
+    }
+  }
+}, {
+  "name": "date_histogram_agg_month_with_term_query",
+  "operation-type": "search",
+  "index": "{{index_name | default('big5')}}",
+  "body": {
+    "size": 0,
+     "query": {
+      "term": {
+        "metrics.tmin": 20
+      }
+    },
+    "aggs": {
+      "by_month": {
+        "date_histogram": {
+          "field": "@timestamp",
+          "calendar_interval": "month"
+        },
+        "aggs": {
+          "sum_status": {
+            "sum": {
+              "field": "metrics.size"
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+

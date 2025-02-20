@@ -1,0 +1,97 @@
+{
+  "settings": {
+    "index.number_of_shards": {{ number_of_shards | default(5) }},
+    "index.number_of_replicas": {{ number_of_replicas | default(0) }},
+    "index.queries.cache.enabled": {{query_cache_enabled | default(false) | tojson}},
+    "index.requests.cache.enable": {{requests_cache_enabled | default(false) | tojson}},
+    "index.composite_index": true,
+    "index.append_only.enabled": true
+  },
+  "mappings": {
+    "dynamic": "strict",
+    "_source": {
+      "enabled": true
+    },
+    "composite": {
+      "startree1": {
+        "type": "star_tree",
+        "config": {
+          "ordered_dimensions": [
+            {
+              "name": "status"
+            },
+            {
+              "name": "size"
+            },
+            {
+               "name": "clientip"
+            },
+            {
+              "name": "@timestamp",
+              "calendar_intervals": [
+                "month",
+                "day"
+              ]
+            }
+          ],
+          "metrics": [
+            {
+              "name": "size",
+              "stats": [
+                "sum",
+                "value_count",
+                "min",
+                "max"
+              ]
+            },
+            {
+              "name": "status",
+              "stats": [
+                "sum",
+                "value_count",
+                "min",
+                "max"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "properties": {
+      "@timestamp": {
+        "format": "strict_date_optional_time||epoch_second",
+        "type": "date"
+      },
+      "message": {
+        "type": "keyword",
+        "index": false,
+        "doc_values": false
+      },
+      "clientip": {
+        "type": "keyword"
+      },
+      "request": {
+        "type": "text",
+        "fields": {
+          "raw": {
+            "ignore_above": 256,
+            "type": "keyword"
+          }
+        }
+      },
+      "status": {
+        "type": "integer"
+      },
+      "size": {
+        "type": "integer"
+      },
+      "geoip" : {
+        "properties" : {
+          "country_name": { "type": "keyword" },
+          "city_name": { "type": "keyword" },
+          "location" : { "type" : "geo_point" }
+        }
+      }
+    }
+  }
+}
