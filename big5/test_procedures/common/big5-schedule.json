@@ -62,10 +62,26 @@
   "clients": {{ search_clients | default(1) }}
 },
 {
-  "name": "date_histogram_agg_month_with_term_query",
-  "operation": "term",
-  "warmup-iterations": {{ warmup_iterations | default(200) | tojson }},
-  "iterations": {{ test_iterations | default(100) | tojson }},
-  "target-throughput": {{ target_throughput | default(2) | tojson }},
-  "clients": {{ search_clients | default(1) }}
+"name": "sum_metric_tmin_with_keyword_high_card_term_query",
+"operation": "term",
+"warmup-iterations": {{ warmup_iterations | default(200) | tojson }},
+"iterations": {{ test_iterations | default(100) | tojson }},
+"target-throughput": {{ target_throughput | default(2) | tojson }},
+"clients": {{ search_clients | default(1) }}
+},
+{
+"name": "sum_metric_tmin_with_keyword_low_card_term_query",
+"operation": "term",
+"warmup-iterations": {{ warmup_iterations | default(200) | tojson }},
+"iterations": {{ test_iterations | default(100) | tojson }},
+"target-throughput": {{ target_throughput | default(2) | tojson }},
+"clients": {{ search_clients | default(1) }}
+},
+{
+"name": "avg_metric_tmin_with_range_query",
+"operation": "term",
+"warmup-iterations": {{ warmup_iterations | default(200) | tojson }},
+"iterations": {{ test_iterations | default(100) | tojson }},
+"target-throughput": {{ target_throughput | default(2) | tojson }},
+"clients": {{ search_clients | default(1) }}
 }

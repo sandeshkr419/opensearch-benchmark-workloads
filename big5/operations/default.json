@@ -1028,13 +1028,53 @@
     "size": 0,
     "query": {
       "term": {
-        "metrics.tmin": 20
+        "metrics.size": 1100
       }
     },
     "aggs": {
       "total_tmin": {
         "sum": {
           "field": "metrics.tmin"
+        }
+      }
+    }
+  }
+},
+{
+  "name": "sum_metric_tmin_with_keyword_high_card_term_query",
+  "operation-type": "search",
+  "index": "{{index_name | default('big5')}}",
+  "body": {
+    "size": 0,
+    "query": {
+      "term": {
+        "aws.cloudwatch.log_stream": "quartzheron"
+      }
+    },
+    "aggs": {
+      "total_tmin": {
+        "sum": {
+          "field": "metrics.tmin"
+        }
+      }
+    }
+  }
+},
+{
+  "name": "sum_metric_tmin_with_keyword_low_card_term_query",
+  "operation-type": "search",
+  "index": "{{index_name | default('big5')}}",
+  "body": {
+    "size": 0,
+    "query": {
+      "term": {
+        "cloud.region": "us-west-2"
+      }
+    },
+    "aggs": {
+      "total_tmin": {
+        "sum": {
+          "field": "metrics.size"
         }
       }
     }
@@ -1093,7 +1133,7 @@
     "size": 0,
     "query": {
       "term": {
-        "metrics.tmin": 20
+        "metrics.size": 1101
       }
     },
     "aggs": {
@@ -1120,7 +1160,7 @@
     "size": 0,
      "query": {
       "term": {
-        "metrics.tmin": 20
+        "metrics.size": 1101
       }
     },
     "aggs": {
@@ -1135,6 +1175,29 @@
               "field": "metrics.size"
             }
           }
+        }
+      }
+    }
+  }
+},
+{
+  "name": "avg_metric_tmin_with_range_query",
+  "operation-type": "search",
+  "index": "{{index_name | default('big5')}}",
+  "body": {
+    "size": 0,
+    "query": {
+      "range": {
+                  "metrics.size": {
+                    "gte": 1098,
+                    "lte": 1102
+                  }
+                }
+    },
+    "aggs": {
+      "total_tmin": {
+        "avg": {
+          "field": "metrics.tmin"
         }
       }
     }
