@@ -41,6 +41,20 @@
   "clients": {{ search_clients | default(1) }}
 },
 {
+  "operation": "max_metric_tmin_with_term_query",
+  "warmup-iterations": {{ warmup_iterations | default(200) | tojson }},
+  "iterations": {{ test_iterations | default(100) | tojson }},
+  "target-throughput": {{ target_throughput | default(2) | tojson }},
+  "clients": {{ search_clients | default(1) }}
+},
+{
+  "operation": "min_metric_tmin_with_term_query",
+  "warmup-iterations": {{ warmup_iterations | default(200) | tojson }},
+  "iterations": {{ test_iterations | default(100) | tojson }},
+  "target-throughput": {{ target_throughput | default(2) | tojson }},
+  "clients": {{ search_clients | default(1) }}
+},
+{
   "operation": "date_histogram_agg_hour",
   "warmup-iterations": {{ warmup_iterations | default(200) | tojson }},
   "iterations": {{ test_iterations | default(100) | tojson }},
