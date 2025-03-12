@@ -18,13 +18,13 @@
         "config": {
           "ordered_dimensions": [
             {
-              "name": "status"
+              "name": "geoip.country_name"
             },
             {
               "name": "size"
             },
             {
-               "name": "clientip"
+               "name": "status"
             },
             {
               "name": "@timestamp",
@@ -68,7 +68,7 @@
         "doc_values": false
       },
       "clientip": {
-        "type": "keyword"
+        "type": "ip"
       },
       "request": {
         "type": "text",

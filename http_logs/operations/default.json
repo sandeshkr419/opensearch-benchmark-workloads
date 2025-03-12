@@ -225,7 +225,7 @@
       }
     },
     {
-      "name": "multi_term_agg",
+      "name": "multi_term_agg1",
       "operation-type": "search",
       "index": "logs-*",
       "body": {
@@ -494,7 +494,7 @@
           }
         ]
       }
-    },    
+    },
     {
       "name": "create-http-log-100-dummy-scripting-search-pipeline",
       "operation-type": "create-search-pipeline",
@@ -510,7 +510,7 @@
           }
         ]
       }
-    },      
+    },
     {
       "name": "create-http-log-all-processors-search-pipeline",
       "operation-type": "create-search-pipeline",
@@ -544,4 +544,25 @@
           }
         ]
       }
+    },
+    {
+  "name": "multi_term_agg",
+  "operation-type": "search",
+  "index": "logs-*",
+  "body": {
+    "size": 0,
+    "aggs": {
+      "status_ranges": {
+        "range": {
+          "field": "status",
+          "ranges": [
+            { "from": 200, "to": 201 },
+            { "from": 201, "to": 205 },
+            { "from": 205, "to": 206 },
+            { "from": 206, "to": 500 }
+          ]
+        }
+      }
     }
+  }
+}

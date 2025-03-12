@@ -3,12 +3,47 @@
     "index.number_of_shards": {{ number_of_shards | default(5) }},
     "index.number_of_replicas": {{ number_of_replicas | default(0) }},
     "index.queries.cache.enabled": {{query_cache_enabled | default(false) | tojson}},
-    "index.requests.cache.enable": {{requests_cache_enabled | default(false) | tojson}}
+    "index.requests.cache.enable": {{requests_cache_enabled | default(false) | tojson}},
+    "index.composite_index": true,
+    "index.append_only.enabled": true
   },
   "mappings": {
     "dynamic": "strict",
     "_source": {
-      "enabled": {{ source_enabled | default(true) | tojson }}
+      "enabled": true
+    },
+    "composite": {
+      "startree1": {
+        "type": "star_tree",
+        "config": {
+          "ordered_dimensions": [
+            {
+              "name": "size"
+            },
+            {
+               "name": "status"
+            },
+            {
+              "name": "@timestamp",
+              "calendar_intervals": [
+                "month",
+                "day"
+              ]
+            }
+          ],
+          "metrics": [
+            {
+              "name": "size",
+              "stats": [
+                "sum",
+                "value_count",
+                "min",
+                "max"
+              ]
+            }
+          ]
+        }
+      }
     },
     "properties": {
       "@timestamp": {
@@ -33,7 +68,7 @@
         }
       },
       "status": {
-        "type": "integer"
+        "type": "keyword"
       },
       "size": {
         "type": "integer"
