@@ -352,4 +352,155 @@
           {"tip_amount" : "asc"}
         ]
       }
+    },
+    {
+      "name": "max_tip_amount_passenger",
+      "operation-type": "search",
+      "index": "nyc_taxis",
+      "body": {
+        "size": 0,
+        "query": {
+          "term": {
+            "passenger_count": 1
+          }
+        },
+        "aggs": {
+          "max_tip_amount": {
+            "max": {
+              "field": "tip_amount"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "sum_tip_amount_passenger",
+      "operation-type": "search",
+      "index": "nyc_taxis",
+      "body": {
+        "size": 0,
+        "query": {
+          "term": {
+            "passenger_count": 1
+          }
+        },
+        "aggs": {
+          "sum_tip_amount": {
+            "sum": {
+              "field": "tip_amount"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "min_tip_amount_passenger",
+      "operation-type": "search",
+      "index": "nyc_taxis",
+      "body": {
+        "size": 0,
+        "query": {
+          "term": {
+            "passenger_count": 1
+          }
+        },
+        "aggs": {
+          "min_tip_amount": {
+            "min": {
+              "field": "tip_amount"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "yearly_tip_sum_passengers_1",
+      "operation-type": "search",
+      "index": "nyc_taxis",
+      "body": {
+        "size": 0,
+        "query": {
+          "term": {
+            "passenger_count": 1
+          }
+        },
+        "aggs": {
+          "hourly_dropoffs": {
+            "date_histogram": {
+              "field": "dropoff_datetime",
+              "calendar_interval": "year",
+              "min_doc_count": 1
+            },
+            "aggs": {
+              "sum_size": {
+                "sum": {
+                  "field": "tip_amount"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+     {
+      "name": "yearly_tip_sum_passengers_1_to_5",
+      "operation-type": "search",
+      "index": "nyc_taxis",
+      "body": {
+        "size": 0,
+        "query": {
+          "range": {
+            "passenger_count": {
+              "gte": 1,
+              "lte": 5
+            }
+          }
+        },
+        "aggs": {
+          "hourly_dropoffs": {
+            "date_histogram": {
+              "field": "dropoff_datetime",
+              "calendar_interval": "year",
+              "min_doc_count": 1
+            },
+            "aggs": {
+              "sum_size": {
+                "sum": {
+                  "field": "tip_amount"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "yearly_tip_sum_passengers_1_or_2",
+      "operation-type": "search",
+      "index": "nyc_taxis",
+      "body": {
+        "size": 0,
+        "query": {
+          "terms": {
+            "passenger_count": [ 1, 2 ]
+          }
+        },
+        "aggs": {
+          "hourly_dropoffs": {
+            "date_histogram": {
+              "field": "dropoff_datetime",
+              "calendar_interval": "year",
+              "min_doc_count": 1
+            },
+            "aggs": {
+              "sum_size": {
+                "sum": {
+                  "field": "tip_amount"
+                }
+              }
+            }
+          }
+        }
+      }
     }
+

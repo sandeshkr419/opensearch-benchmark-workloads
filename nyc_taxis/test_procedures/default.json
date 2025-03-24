@@ -152,4 +152,11 @@
         },
         {{ benchmark.collect(parts="../../common_operations/force_merge.json") }}
       ]
+    },
+    {
+    "name": "test",
+    "default": false,
+    "schedule": [
+    {{ benchmark.collect(parts="startree/default.json") }}
+    ]
     }
